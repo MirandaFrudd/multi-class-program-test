@@ -234,12 +234,12 @@ result => 5
 # Contact
 
 # Adds a contact if the phone number is valid -MAYBE REMOVE AS CHECKED UP ^ NO RETURNS FOR CONTACTS CLASS
-contact1 = Contact("Miranda", 07123456789)
+contact1 = Contact.new("Miranda", 07123456789)
 result = contact.add
 result = "Miranda - 07123456789"
 
 # Fails if contact number is not valid
-contact1 = Contact("Miranda", 0712345678)
+contact1 = Contact.new("Miranda", 0712345678)
 result = contact1.add
 result = "Please check the phone number you are trying to add is correct"
 
