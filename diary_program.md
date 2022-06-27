@@ -14,7 +14,7 @@ As a user
 So that I can reflect on my experiences in my busy day
 I want to select diary entries to read based on how much time I have and my reading speed
 
-# 4 -> add tasks 
+# 4 -> add tasks to be stored in the diary 
 As a user
 So that I can keep track of my tasks
 I want to keep a todo list along with my diary
@@ -30,9 +30,19 @@ class Contact
     def initialize(name, number)
         # initializes with contact name and number
     end
+
+    def valid?
+        # checks if number is valid - called on by add
+    end
+
+    def add
+        # returns contact if the number is 11 didgets and starts with 07
+    end
 end
 
-class Task
+class DiaryEntry
+# attr_reader :entry_name
+# attr_reader :entry
     def initialize(entry_name, entry)
     end
 
@@ -56,17 +66,21 @@ class Task
     end
 
     def mark_complete
-        # marks an entry as complete
+        # marks a task as complete
     end
 
     def complete?
-        marks a task as complete
+       # returns true if task is complete
     end
 end
 
 class Diary
+    def initialize
+        initializes with an empty array of contacts, tasks and diary entries
+    end
+
     def add_entry(entry)
-        # adds an instance of entry
+        # adds an instance of DiaryEntry
     end
 
     def all_entries
@@ -78,7 +92,7 @@ class Diary
     end
 
     def add_task(task)
-        # adds an instance of task
+        # adds an instance of Task
     end
 
     def all_tasks
@@ -105,13 +119,13 @@ end
 
 # TESTS
 
-# I;ntegration
+# Integration (Diary class)
 
 # 1 User can read all their diary entries
 diary = Diary.new
-entry1 = Task.new("Monday 1 Jan", "One Two Three Four Five")
-entry2 = Task.new("Tuesday 2 Jan", "One Two Three Four Five Six")
-entry3 = Task.new("Wednesday 3 Jan", "One Two Three ")
+entry1 = DiaryEntry.new("Monday 1 Jan", "One Two Three Four Five")
+entry2 = DiaryEntry.new("Tuesday 2 Jan", "One Two Three Four Five Six")
+entry3 = DiaryEntry.new("Wednesday 3 Jan", "One Two Three ")
 diary.add_entry(entry1)
 diary.add_entry(entry2)
 diary.add_entry(entry3)
@@ -119,19 +133,19 @@ expect(diary.all_entries).to eq "Monday 1 Jan - One Two Three Four Five\nTuesday
 
 # 2 User can read the longest entry possible in a given time
 diary = Diary.new
-entry1 = Task.new("Monday 1 Jan", "One Two Three Four Five")
-entry2 = Task.new("Tuesday 2 Jan", "One Two Three Four Five Six")
-entry3 = Task.new("Wednesday 3 Jan", "One Two Three ")
+entry1 = DiaryEntry.new("Monday 1 Jan", "One Two Three Four Five")
+entry2 = DiaryEntry.new("Tuesday 2 Jan", "One Two Three Four Five Six")
+entry3 = DiaryEntry.new("Wednesday 3 Jan", "One Two Three ")
 diary.add_entry(entry1)
 diary.add_entry(entry2)
 diary.add_entry(entry3)
 diary.longest_entry_read(2, 3) # => "You can read an entry from Tuesday 2 Jan"
 
-# 3 User cannot read any entries if there is not enough time
+# 3 User cannot read any entries if there is not enough time (fail message?)
 diary = Diary.new
-entry1 = Task.new("Monday 1 Jan", "One Two Three Four Five")
-entry2 = Task.new("Tuesday 2 Jan", "One Two Three Four Five Six")
-entry3 = Task.new("Wednesday 3 Jan", "One Two Three ")
+entry1 = DiaryEntry.new("Monday 1 Jan", "One Two Three Four Five")
+entry2 = DiaryEntry.new("Tuesday 2 Jan", "One Two Three Four Five Six")
+entry3 = DiaryEntry.new("Wednesday 3 Jan", "One Two Three ")
 diary.add_entry(entry1)
 diary.add_entry(entry2)
 diary.add_entry(entry3)
@@ -178,4 +192,54 @@ diary.add_contact(contact1)
 diary.add_contact(contact2)
 diary.add_contact(contact3)
 expect(diary.all_contacts).to eq "Miranda - 07892398731\nOlivia - 07892398732\nLauren - 07892398733"
+
+# 7 If user adds an invalid contact, it is not displayed in the list
+diary = Diary.new
+contact1 = Contact.new("Miranda", "07892398731")
+contact2 = Contact.new("Olivia", "0789239873")
+contact3 = Contact.new("Lauren", "07892398733"")
+diary.add_contact(contact1)
+diary.add_contact(contact2)
+diary.add_contact(contact3)
+expect(diary.all_contacts).to eq "Miranda - 07892398731\nLauren - 07892398733"
+
+# Task class
+
+# 1 User can mark a task as complete DONE
+task1 = Task.new("Walk the dog")
+task1.mark_complete
+result = task1.complete? => true
+
+# 2 Return a fail message if #complete? is called on an incomplete task DONE
+task1 = Task.new("Walk the dog")
+result = task1.complete? => "Your task is not completed"
+
+# DiaryEntry class
+
+# 1 User can read the entry DONE
+entry1 = DiaryEntry.new("Monday 1 Jan", "One Two Three Four Five")
+result = entry1.entry
+result => "One Two Three Four Five"
+
+# 2 User can read the #entry_name for the entry DONE
+entry1 = DiaryEntry.new("Monday 1 Jan", "One Two Three Four Five")
+result = entry1.entry_name
+result => "Monday 1 Jan"
+
+# 3 Returns how many words are in an entry DONE
+entry1 = DiaryEntry.new("Monday 1 Jan", "One Two Three Four Five")
+result = entry1.entry_length
+result => 5
+
+# Contact
+
+# Adds a contact if the phone number is valid -MAYBE REMOVE AS CHECKED UP ^ NO RETURNS FOR CONTACTS CLASS
+contact1 = Contact("Miranda", 07123456789)
+result = contact.add
+result = "Miranda - 07123456789"
+
+# Fails if contact number is not valid
+contact1 = Contact("Miranda", 0712345678)
+result = contact1.add
+result = "Please check the phone number you are trying to add is correct"
 
