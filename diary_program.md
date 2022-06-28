@@ -121,7 +121,7 @@ end
 
 # Integration (Diary class)
 
-# 1 User can read all their diary entries
+# 1 User can read all their diary entries DONE
 diary = Diary.new
 entry1 = DiaryEntry.new("Monday 1 Jan", "One Two Three Four Five")
 entry2 = DiaryEntry.new("Tuesday 2 Jan", "One Two Three Four Five Six")
@@ -131,7 +131,7 @@ diary.add_entry(entry2)
 diary.add_entry(entry3)
 expect(diary.all_entries).to eq "Monday 1 Jan - One Two Three Four Five\nTuesday 2 Jan - One Two Three Four Five six\nWednesday 3 Jan - One Two Three"
 
-# 2 User can read the longest entry possible in a given time
+# 2 User can read the longest entry possible in a given time DONE
 diary = Diary.new
 entry1 = DiaryEntry.new("Monday 1 Jan", "One Two Three Four Five")
 entry2 = DiaryEntry.new("Tuesday 2 Jan", "One Two Three Four Five Six")
@@ -141,7 +141,7 @@ diary.add_entry(entry2)
 diary.add_entry(entry3)
 diary.longest_entry_read(2, 3) # => "You can read an entry from Tuesday 2 Jan"
 
-# 3 User cannot read any entries if there is not enough time (fail message?)
+# 3 User cannot read any entries if there is not enough time (fail message?) DONE 
 diary = Diary.new
 entry1 = DiaryEntry.new("Monday 1 Jan", "One Two Three Four Five")
 entry2 = DiaryEntry.new("Tuesday 2 Jan", "One Two Three Four Five Six")
@@ -151,24 +151,24 @@ diary.add_entry(entry2)
 diary.add_entry(entry3)
 diary.longest_entry_read(1, 1) # => "Sorry, you don't have time to read right now!"
 
-# 4 User can read all their tasks 
+# 4 User can read all their tasks DONE
 diary = Diary.new
 task1 = Task.new("Walk the dog")
 task2 = Task.new("Walk the pig")
 task3 = Task.new("Walk the frog")
 diary.add_task(task1)
 diary.add_task(task2)
-diary.add_task(task2)
+diary.add_task(task3)
 expect(diary.all_tasks).to eq "Walk the dog\nWalk the pig\nWalk the frog"
 
-# 5 User can read all their completed tasks 
+# 5 User can read all their completed tasks DONE
 diary = Diary.new
 task1 = Task.new("Walk the dog")
 task2 = Task.new("Walk the pig")
 task3 = Task.new("Walk the frog")
 diary.add_task(task1)
 diary.add_task(task2)
-diary.add_task(task2)
+diary.add_task(task3)
 task2.mark_complete
 expect(diary.complete_tasks).to eq "Walk the pig"
 
@@ -183,7 +183,7 @@ diary.add_task(task2)
 task2.mark_complete
 expect(diary.incomplete_tasks).to eq "Walk the dog\nWalk the frog"
 
-# 7 User can read all their contacts
+# 7 User can read all their contacts - DONE
 diary = Diary.new
 contact1 = Contact.new("Miranda", "07892398731")
 contact2 = Contact.new("Olivia", "07892398732")
@@ -193,7 +193,7 @@ diary.add_contact(contact2)
 diary.add_contact(contact3)
 expect(diary.all_contacts).to eq "Miranda - 07892398731\nOlivia - 07892398732\nLauren - 07892398733"
 
-# 7 If user adds an invalid contact, it is not displayed in the list
+# 8 If user adds an invalid contact, it is not displayed in the list
 diary = Diary.new
 contact1 = Contact.new("Miranda", "07892398731")
 contact2 = Contact.new("Olivia", "0789239873")

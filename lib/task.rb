@@ -1,4 +1,7 @@
 class Task
+    attr_reader :task
+    attr_reader :status
+    
     def initialize(task)
         @task = task
         @status = 'incomplete'
